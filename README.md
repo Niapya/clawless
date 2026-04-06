@@ -1,4 +1,4 @@
-# ClawLess
+# ClawLess(WIP)
 
 <p align="center">
 	<img src="./app/icon.png" alt="clawless" width="160" />

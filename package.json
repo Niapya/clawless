@@ -72,6 +72,7 @@
   },
   "name": "clawless",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "next build",
     "check": "tsc --noEmit && bun biome check . --write",
