@@ -19,10 +19,7 @@ jobs:
         run: bun install
 
       - name: Run lint
-        run: bun run lint
-
-      - name: Check format
-        run: bun run format:check
+        run: bun run check
 
       - name: Build application test
         run: bun run build
