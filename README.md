@@ -20,6 +20,8 @@
 > 
 > Until version 1.0 is released, I suggest you treat this as a try. We cannot guarantee full backwards compatibility at this stage.
 
+![ClawLess](.docs/public/images/preview.png)
+
 ClawLess 是一个部署在 **Vercel** 的免费 AI agent，它是 OpenClaw 和 Manus 的**轻量替代**。
 
 ClawLess 拥有你对 OpenClaw 的需求：Chat, Skills, Memory (with RAG search), Channel, Bash Tools (runing on Sandbox) 和 Delay/Crons Tasks，我们还参考了 Manus 的一些特性，例如 Files, MCP, Sub-agents，而且**它是 Serverless 的**。

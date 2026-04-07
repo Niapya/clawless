@@ -4,6 +4,8 @@ description: A serverless AI agent
 order: 1
 ---
 
+![ClawLess](/clawless/images/preview.png)
+
 ClawLess is a free AI agent deployed on Vercel — a lightweight alternative to OpenClaw and Manus.
 
 > **It's simple, free, open-source, and easy to deploy to Vercel.**
@@ -32,6 +34,10 @@ Select a team and name the project `clawless`, then click Next.
 
 ![Add Blob](/clawless/images/add-blob-product.png)
 
+![Add Redis](/clawless/images/add-redis-product.png)
+
+![Add Postgres](/clawless/images/add-postgres-product.png)
+
 Then follow the prompts to add the **three** required products (Blob, Upstash for Redis, and Neon). When creating the Blob store, set it to `public`.
 
 When adding these products, you can choose any name, region, or plan you like; we recommend selecting the free plan.
@@ -58,6 +64,7 @@ Next, add the following environment variables:
 	}
 
 	code.textContent = [
+		`# Below are the randomly generated environment variables.`,
 		`AUTH_SECRET=${createRandomString(10)}`,
 		`USERNAME=${createRandomString(10)}`,
 		`PASSWORD=${createRandomString(10)}`,
