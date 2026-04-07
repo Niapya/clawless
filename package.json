@@ -70,9 +70,10 @@
     "typescript": "^5.9.3",
     "vercel": "latest"
   },
-  "name": "clawless",
-  "private": true,
   "license": "MIT",
+  "name": "clawless",
+  "packageManager": "bun@1.3.11",
+  "private": true,
   "scripts": {
     "build": "next build",
     "check": "tsc --noEmit && bun biome check . --write",
@@ -84,8 +85,8 @@
     "dev": "next dev",
     "format": "biome format . --write",
     "lint:fix": "biome lint . --write --unsafe",
-    "publish": "bun run check && bun run build && git push",
     "postbuild": "bun run scripts/vercel-postbuild.ts",
+    "publish": "bun run check && bun run build && git push",
     "start": "next start",
     "workflow:inspect": "workflow inspect runs --web"
   },
