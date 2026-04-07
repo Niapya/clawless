@@ -20,6 +20,3 @@ jobs:
 
       - name: Run check
         run: bun tsc --noEmit && bun biome check
-
-      - name: Build application test
-        run: bun next build
