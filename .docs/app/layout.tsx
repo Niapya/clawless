@@ -1,16 +1,44 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
+import {
+  DOCS_AUTHOR,
+  DOCS_SITE_DESCRIPTION,
+  DOCS_SITE_NAME,
+  DOCS_SITE_URL,
+  buildDocMetadata,
+} from '../lib/seo';
+
 import './globals.css';
 
+const SITE_ICON_URL = `${DOCS_SITE_URL}/icon.png`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://niapya.github.io/clawless'),
-  title: 'ClawLess Docs',
-  description:
-    'Markdown-driven product documentation published with GitHub Pages.',
-  alternates: {
-    canonical: 'https://niapya.github.io/clawless',
+  metadataBase: new URL(DOCS_SITE_URL),
+  applicationName: DOCS_SITE_NAME,
+  title: DOCS_SITE_NAME,
+  description: DOCS_SITE_DESCRIPTION,
+  keywords: [
+    'ClawLess',
+    'ClawLess Docs',
+    'documentation',
+    'Vercel',
+    'Next.js',
+    'AI agent',
+  ],
+  authors: [{ name: DOCS_AUTHOR }],
+  creator: DOCS_AUTHOR,
+  publisher: DOCS_AUTHOR,
+  category: 'documentation',
+  icons: {
+    icon: SITE_ICON_URL,
+    shortcut: SITE_ICON_URL,
+    apple: SITE_ICON_URL,
   },
+  ...buildDocMetadata({
+    description: DOCS_SITE_DESCRIPTION,
+    canonical: DOCS_SITE_URL,
+  }),
 };
 
 export default function RootLayout({

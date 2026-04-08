@@ -4,11 +4,67 @@ import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '@/components/theme-provider';
+import { getAppBaseUrl } from '@/lib/bot/webhook';
 
 import './globals.css';
 
+const APP_NAME = 'ClawLess';
+const APP_DESCRIPTION =
+  'ClawLess is a serverless AI agent platform for chat, skills, memory, channels, files, and workflows.';
+
+const APP_BASE_URL = getAppBaseUrl();
+const APP_ICON_URL = `${APP_BASE_URL}/icon.png`;
+
 export const metadata: Metadata = {
-  title: 'ClawLess',
+  metadataBase: new URL(APP_BASE_URL),
+  applicationName: APP_NAME,
+  title: {
+    default: APP_NAME,
+    template: `%s | ${APP_NAME}`,
+  },
+  description: APP_DESCRIPTION,
+  keywords: [
+    'ClawLess',
+    'AI agent',
+    'Next.js',
+    'Vercel',
+    'chat',
+    'memory',
+    'skills',
+    'channels',
+    'workflow',
+  ],
+  authors: [{ name: 'ClawLess Team' }],
+  creator: 'ClawLess Team',
+  publisher: 'ClawLess Team',
+  category: 'technology',
+  icons: {
+    icon: APP_ICON_URL,
+    shortcut: APP_ICON_URL,
+    apple: APP_ICON_URL,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    siteName: APP_NAME,
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    images: [
+      {
+        url: APP_ICON_URL,
+        width: 512,
+        height: 512,
+        alt: 'ClawLess logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
+    images: [APP_ICON_URL],
+  },
   robots: {
     index: false,
     follow: false,

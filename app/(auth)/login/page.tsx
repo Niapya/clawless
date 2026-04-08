@@ -8,9 +8,48 @@ import {
 import { getAuthConfigStatus } from '@/lib/auth/config';
 import { AUTH_COOKIE_NAME } from '@/lib/auth/constants';
 import { verifyAuthToken } from '@/lib/auth/session';
+import { getAppBaseUrl } from '@/lib/bot/webhook';
+import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { LoginForm } from './login-form';
+
+const APP_NAME = 'ClawLess';
+const LOGIN_DESCRIPTION =
+  'Sign in to ClawLess to manage chats, files, memory, skills, channels, and workflows.';
+
+const APP_BASE_URL = getAppBaseUrl();
+const APP_ICON_URL = `${APP_BASE_URL}/icon.png`;
+
+export const metadata: Metadata = {
+  title: 'Sign in',
+  description: LOGIN_DESCRIPTION,
+  alternates: {
+    canonical: '/login',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/login',
+    siteName: APP_NAME,
+    title: `Sign in | ${APP_NAME}`,
+    description: LOGIN_DESCRIPTION,
+    images: [
+      {
+        url: APP_ICON_URL,
+        width: 512,
+        height: 512,
+        alt: 'ClawLess logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Sign in | ${APP_NAME}`,
+    description: LOGIN_DESCRIPTION,
+    images: [APP_ICON_URL],
+  },
+};
 
 function normalizeRedirectTo(input: string | undefined): string {
   if (!input) {
@@ -46,7 +85,7 @@ export default async function LoginPage({
               <CardTitle>Authentication setup required</CardTitle>
               <CardDescription>
                 Sign in is disabled until the server is configured with
-                `AUTH_SECRET`, `username`, and `password`.
+                `AUTH_SECRET`, `USERNAME`, and `PASSWORD`.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

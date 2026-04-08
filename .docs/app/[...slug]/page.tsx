@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { DocsShell } from '../../components/docs-shell';
 import { getDocBySlug, getDocSummaries } from '../../lib/docs';
+import { DOCS_SITE_NAME, buildDocMetadata, getDocUrl } from '../../lib/seo';
 
 type PageProps = {
   params: Promise<{
@@ -22,13 +23,17 @@ export async function generateMetadata({ params }: PageProps) {
   const doc = getDocBySlug(slug);
 
   if (!doc) {
-    return {};
+    return buildDocMetadata({
+      description: 'ClawLess documentation.',
+      canonical: getDocUrl(slug),
+    });
   }
 
-  return {
-    title: `${doc.title} | ClawLess Docs`,
+  return buildDocMetadata({
+    title: `${doc.title} | ${DOCS_SITE_NAME}`,
     description: doc.description,
-  };
+    canonical: getDocUrl(slug),
+  });
 }
 
 export default async function DocPage({ params }: PageProps) {

@@ -1,5 +1,42 @@
 import { Chat } from '@/components/chat';
+import { getAppBaseUrl } from '@/lib/bot/webhook';
 import { generateUUID } from '@/lib/utils';
+import type { Metadata } from 'next';
+
+const APP_NAME = 'ClawLess';
+const CHAT_DESCRIPTION = 'Start a new conversation with ClawLess.';
+const APP_BASE_URL = getAppBaseUrl();
+const APP_ICON_URL = `${APP_BASE_URL}/icon.png`;
+
+export const metadata: Metadata = {
+  title: 'New Chat',
+  description: CHAT_DESCRIPTION,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    siteName: APP_NAME,
+    title: `New Chat | ${APP_NAME}`,
+    description: CHAT_DESCRIPTION,
+    images: [
+      {
+        url: APP_ICON_URL,
+        width: 512,
+        height: 512,
+        alt: 'ClawLess logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `New Chat | ${APP_NAME}`,
+    description: CHAT_DESCRIPTION,
+    images: [APP_ICON_URL],
+  },
+};
 
 /**
  * New conversation entry page.
