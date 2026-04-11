@@ -39,10 +39,10 @@ function PureChatHeader({
       <div className="flex items-start gap-2">
         {session ? (
           <div className="min-w-0 flex-1">
-            <h1 className="min-w-0 truncate text-sm font-semibold text-foreground">
+            <h1 className="min-w-0 truncate font-semibold text-foreground text-sm">
               {session.title ?? 'Untitled Session'}
             </h1>
-            <div className="mt-1 flex flex-wrap gap-2 text-xs text-muted-foreground">
+            <div className="mt-1 flex flex-wrap gap-2 text-muted-foreground text-xs">
               {sessionDetails.map(({ label, value, valueClassName }) => (
                 <span
                   key={label}

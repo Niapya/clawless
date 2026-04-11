@@ -222,14 +222,14 @@ export function AppSidebar({
     <Sidebar className="group-data-[side=left]:border-r-0">
       <SidebarHeader>
         <SidebarMenu>
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row items-center justify-between">
             <Link
               href="/"
               onClick={() => setOpenMobile(false)}
-              className="flex flex-row gap-1 items-center"
+              className="flex flex-row items-center gap-1"
             >
               <Logo width={24} height={24} />
-              <span className="text-lg font-semibold hover:bg-muted rounded-md cursor-pointer">
+              <span className="cursor-pointer rounded-md font-semibold text-lg hover:bg-muted">
                 ClawLess
               </span>
             </Link>
@@ -238,7 +238,7 @@ export function AppSidebar({
                 <Button
                   variant="ghost"
                   type="button"
-                  className="p-2 h-fit"
+                  className="h-fit p-2"
                   onClick={() => {
                     setOpenMobile(false);
                     router.push('/');
@@ -292,7 +292,7 @@ export function AppSidebar({
                     <Loader2 className="size-4 animate-spin text-muted-foreground" />
                   </div>
                 ) : sessions.length === 0 ? (
-                  <p className="text-xs text-muted-foreground px-2 py-2">
+                  <p className="px-2 py-2 text-muted-foreground text-xs">
                     No sessions yet
                   </p>
                 ) : (
@@ -318,7 +318,7 @@ export function AppSidebar({
                             align="start"
                             className="w-56"
                           >
-                            <DropdownMenuLabel className="text-xs leading-5 text-muted-foreground">
+                            <DropdownMenuLabel className="text-muted-foreground text-xs leading-5">
                               Delete this session and all of its messages?
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
@@ -380,15 +380,15 @@ export function AppSidebar({
               onValueChange={(value) => setTheme(value as ThemeMode)}
             >
               <DropdownMenuRadioItem value="light">
-                <Sun className="size-4 mx-2" />
+                <Sun className="mx-2 size-4" />
                 Light
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="dark">
-                <Moon className="size-4 mx-2" />
+                <Moon className="mx-2 size-4" />
                 Dark
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="system">
-                <Monitor className="size-4 mx-2" />
+                <Monitor className="mx-2 size-4" />
                 System
               </DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
@@ -414,7 +414,7 @@ export function AppSidebar({
               {loggingOut ? 'Signing out...' : 'Sign out'}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
+            <DropdownMenuLabel className="text-muted-foreground text-xs">
               Version {packageJson.version}
             </DropdownMenuLabel>
           </DropdownMenuContent>

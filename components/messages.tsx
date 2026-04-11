@@ -85,7 +85,7 @@ function PureMessages({
   return (
     <div
       ref={messagesContainerRef}
-      className="flex flex-1 min-w-0 flex-col gap-6 overflow-y-scroll overflow-x-hidden pt-4"
+      className="flex min-w-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-scroll pt-4"
     >
       {messages.length === 0 && <Overview onPromptSelect={onPromptSelect} />}
 
@@ -105,7 +105,7 @@ function PureMessages({
 
       <div
         ref={messagesEndRef}
-        className="shrink-0 min-w-[24px] min-h-[24px]"
+        className="min-h-[24px] min-w-[24px] shrink-0"
       />
     </div>
   );

@@ -2,21 +2,7 @@ import type { NextConfig } from 'next';
 import { withWorkflow } from 'workflow/next';
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['@vercel/queue'],
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-Robots-Tag',
-            value:
-              'noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate',
-          },
-        ],
-      },
-    ];
-  },
+  serverExternalPackages: ['@workflow/world-vercel', '@vercel/queue'],
   images: {
     remotePatterns: [
       {

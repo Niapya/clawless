@@ -158,7 +158,7 @@ export function ToolsForm({
         </CardHeader>
         <CardContent className="space-y-4">
           {visibleToolIds.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               No built-in tools found.
             </p>
           ) : (
@@ -180,15 +180,15 @@ export function ToolsForm({
               return (
                 <div key={toolId} className="rounded-2xl border p-4">
                   <div className="space-y-2">
-                    <p className="text-sm font-medium">ID</p>
+                    <p className="font-medium text-sm">ID</p>
                     <p className="rounded-xl border bg-muted/30 px-3 py-2 text-sm">
                       {toolId}
                     </p>
                   </div>
 
                   <div className="mt-3 space-y-2">
-                    <p className="text-sm font-medium">Description</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="font-medium text-sm">Description</p>
+                    <p className="text-muted-foreground text-sm">
                       {catalogItem?.description ?? 'No description.'}
                     </p>
                   </div>
@@ -207,14 +207,14 @@ export function ToolsForm({
                   </div>
 
                   {missingRequiredInDraft.length > 0 ? (
-                    <p className="mt-3 text-sm text-amber-700">
+                    <p className="mt-3 text-amber-700 text-sm">
                       Missing required config:{' '}
                       {missingRequiredInDraft.join(', ')}
                     </p>
                   ) : null}
 
                   <div className="mt-4 space-y-3">
-                    <p className="text-sm font-medium">Configure</p>
+                    <p className="font-medium text-sm">Configure</p>
 
                     {requiredConfig.map((configKey) => (
                       <Field
@@ -271,7 +271,7 @@ export function ToolsForm({
                     ))}
 
                     {!hasConfigFields ? (
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         No configurable fields.
                       </p>
                     ) : null}

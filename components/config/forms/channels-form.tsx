@@ -194,7 +194,7 @@ export function ChannelsForm({
                     } as AppConfig['channels'])
                   }
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Scheduled workflow broadcasts only send to user IDs in this
                   list.
                 </p>
@@ -251,16 +251,16 @@ export function ChannelsForm({
                       </div>
                     </div>
                   ) : webhookConfigStatus === 'loading' ? (
-                    <div className="rounded-lg border px-3 py-2 text-sm text-muted-foreground">
+                    <div className="rounded-lg border px-3 py-2 text-muted-foreground text-sm">
                       Loading webhook configuration...
                     </div>
                   ) : webhookConfigStatus === 'error' ? (
-                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-amber-900 text-sm">
                       Failed to load the webhook URL from the server. Refresh
                       the page and try again.
                     </div>
                   ) : (
-                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                    <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-amber-900 text-sm">
                       AUTH_SECRET is not configured on the server yet, so the
                       callback URL cannot be generated.
                     </div>

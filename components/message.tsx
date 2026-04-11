@@ -352,7 +352,7 @@ function formatWorkflowDataTitle(part: WorkflowDataUIPart): string {
 function formatWorkflowDataBody(part: WorkflowDataUIPart): ReactNode {
   if (part.data.kind === 'message') {
     return (
-      <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+      <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
         {part.data.message}
       </div>
     );
@@ -378,7 +378,7 @@ function formatWorkflowDataBody(part: WorkflowDataUIPart): ReactNode {
       );
     case 'user-message':
       return (
-        <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+        <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
           {part.data.content}
         </div>
       );
@@ -431,10 +431,10 @@ function WorkflowDataTimeline({
             className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
           >
             <div className="min-w-0 flex-1">
-              <div className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+              <div className="text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
                 {agentName}:
               </div>
-              <div className="mt-1 text-sm font-semibold leading-5 text-foreground">
+              <div className="mt-1 font-semibold text-foreground text-sm leading-5">
                 Workflow
               </div>
             </div>
@@ -442,7 +442,7 @@ function WorkflowDataTimeline({
             <div className="flex shrink-0 items-center gap-2 pl-2">
               <span
                 className={cn(
-                  'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                  'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                   tone.badge,
                 )}
               >
@@ -469,14 +469,14 @@ function WorkflowDataTimeline({
                 transition={detailsTransition}
                 className="overflow-hidden"
               >
-                <div className="border-t border-border/60 px-4 pb-4 pt-3">
+                <div className="border-border/60 border-t px-4 pt-3 pb-4">
                   <div className="space-y-3">
                     {parts.map((part, index) => (
                       <div
                         key={`${agentName}-${part.type}-${index}`}
                         className="rounded-xl border border-border/60 bg-muted/10 p-3"
                       >
-                        <div className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                        <div className="text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
                           {formatWorkflowDataTitle(part)}
                         </div>
                         <div className="mt-2">
@@ -567,7 +567,7 @@ function ToolDetailsSection({
 }) {
   return (
     <div className="space-y-2">
-      <div className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+      <div className="text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
         {label}
       </div>
       {children}
@@ -577,7 +577,7 @@ function ToolDetailsSection({
 
 function ToolDetailsPre({ value }: { value: unknown }) {
   return (
-    <pre className="overflow-x-auto rounded-xl border border-border/60 bg-muted/40 p-3 text-xs leading-5 text-foreground/80">
+    <pre className="overflow-x-auto rounded-xl border border-border/60 bg-muted/40 p-3 text-foreground/80 text-xs leading-5">
       {typeof value === 'string' ? value : formatJSON(value)}
     </pre>
   );
@@ -654,7 +654,7 @@ function ReasoningTimeline({
                   className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold leading-5 text-foreground">
+                    <div className="font-semibold text-foreground text-sm leading-5">
                       Reasoning
                     </div>
                   </div>
@@ -662,7 +662,7 @@ function ReasoningTimeline({
                   <div className="flex shrink-0 items-center gap-2 pl-2">
                     <span
                       className={cn(
-                        'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                        'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                         tone.badge,
                       )}
                     >
@@ -697,8 +697,8 @@ function ReasoningTimeline({
                       transition={detailsTransition}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-border/60 bg-muted/10 px-4 pb-4 pt-3">
-                        <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+                      <div className="border-border/60 border-t bg-muted/10 px-4 pt-3 pb-4">
+                        <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
                           {part.text}
                         </div>
                       </div>
@@ -784,7 +784,7 @@ function ToolTimeline({ parts }: { parts: DynamicToolUIPart[] }) {
                   className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold leading-5 text-foreground">
+                    <div className="font-semibold text-foreground text-sm leading-5">
                       {displayTitle}
                     </div>
                     {showRawToolName ? (
@@ -797,7 +797,7 @@ function ToolTimeline({ parts }: { parts: DynamicToolUIPart[] }) {
                   <div className="flex shrink-0 items-center gap-2 pl-2">
                     <span
                       className={cn(
-                        'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                        'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                         tone.badge,
                       )}
                     >
@@ -832,7 +832,7 @@ function ToolTimeline({ parts }: { parts: DynamicToolUIPart[] }) {
                       transition={detailsTransition}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-border/60 bg-muted/10 px-4 pb-4 pt-3">
+                      <div className="border-border/60 border-t bg-muted/10 px-4 pt-3 pb-4">
                         <div className="space-y-3">
                           {hasInput ? (
                             <ToolDetailsSection label="Input">
@@ -859,7 +859,7 @@ function ToolTimeline({ parts }: { parts: DynamicToolUIPart[] }) {
                           ) : null}
 
                           {!hasDetails ? (
-                            <div className="rounded-xl border border-dashed border-border/60 bg-muted/30 p-3 text-xs text-muted-foreground">
+                            <div className="rounded-xl border border-border/60 border-dashed bg-muted/30 p-3 text-muted-foreground text-xs">
                               Structured details are not available yet.
                             </div>
                           ) : null}
@@ -943,10 +943,10 @@ function WorkflowMessageTimeline({
                   className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold leading-5 text-foreground">
+                    <div className="font-semibold text-foreground text-sm leading-5">
                       {formatWorkflowEventTitle(part)}
                     </div>
-                    <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                    <div className="mt-1 text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
                       Workflow
                     </div>
                   </div>
@@ -954,7 +954,7 @@ function WorkflowMessageTimeline({
                   <div className="flex shrink-0 items-center gap-2 pl-2">
                     <span
                       className={cn(
-                        'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                        'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                         tone.badge,
                       )}
                     >
@@ -989,9 +989,9 @@ function WorkflowMessageTimeline({
                       transition={detailsTransition}
                       className="overflow-hidden"
                     >
-                      <div className="border-t border-border/60 px-4 pb-4 pt-3">
+                      <div className="border-border/60 border-t px-4 pt-3 pb-4">
                         {part.data.type === 'system-event' ? (
-                          <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+                          <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
                             {part.data.message}
                           </div>
                         ) : null}
@@ -1297,7 +1297,7 @@ function AssistantMessageParts({
 
   return (
     <>
-      <div className="flex min-w-0 flex-col gap-2 w-full">
+      <div className="flex w-full min-w-0 flex-col gap-2">
         {renderableParts.map(({ part, index }) => {
           const showConnector = hasNextTimelinePart(index);
 
@@ -1369,7 +1369,7 @@ function AssistantMessageParts({
                       className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-semibold leading-5 text-foreground">
+                        <div className="font-semibold text-foreground text-sm leading-5">
                           Reasoning
                         </div>
                       </div>
@@ -1377,7 +1377,7 @@ function AssistantMessageParts({
                       <div className="flex shrink-0 items-center gap-2 pl-2">
                         <span
                           className={cn(
-                            'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                            'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                             tone.badge,
                           )}
                         >
@@ -1412,8 +1412,8 @@ function AssistantMessageParts({
                           transition={detailsTransition}
                           className="overflow-hidden"
                         >
-                          <div className="border-t border-border/60 bg-muted/10 px-4 pb-4 pt-3">
-                            <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+                          <div className="border-border/60 border-t bg-muted/10 px-4 pt-3 pb-4">
+                            <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
                               {part.text}
                             </div>
                           </div>
@@ -1486,7 +1486,7 @@ function AssistantMessageParts({
                       className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-semibold leading-5 text-foreground">
+                        <div className="font-semibold text-foreground text-sm leading-5">
                           {displayTitle}
                         </div>
                         {showRawToolName ? (
@@ -1499,7 +1499,7 @@ function AssistantMessageParts({
                       <div className="flex shrink-0 items-center gap-2 pl-2">
                         <span
                           className={cn(
-                            'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                            'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                             tone.badge,
                           )}
                         >
@@ -1517,7 +1517,7 @@ function AssistantMessageParts({
                     </button>
 
                     {canRespondApproval ? (
-                      <div className="border-t border-border/60 bg-background/60 px-4 py-3">
+                      <div className="border-border/60 border-t bg-background/60 px-4 py-3">
                         <div className="flex flex-wrap justify-end gap-2">
                           <Button
                             size="sm"
@@ -1568,7 +1568,7 @@ function AssistantMessageParts({
                           transition={detailsTransition}
                           className="overflow-hidden"
                         >
-                          <div className="border-t border-border/60 bg-muted/10 px-4 pb-4 pt-3">
+                          <div className="border-border/60 border-t bg-muted/10 px-4 pt-3 pb-4">
                             <div className="space-y-3">
                               {hasInput ? (
                                 <ToolDetailsSection label="Input">
@@ -1595,7 +1595,7 @@ function AssistantMessageParts({
                               ) : null}
 
                               {!hasDetails ? (
-                                <div className="rounded-xl border border-dashed border-border/60 bg-muted/30 p-3 text-xs text-muted-foreground">
+                                <div className="rounded-xl border border-border/60 border-dashed bg-muted/30 p-3 text-muted-foreground text-xs">
                                   Structured details are not available yet.
                                 </div>
                               ) : null}
@@ -1669,10 +1669,10 @@ function AssistantMessageParts({
                       className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-semibold leading-5 text-foreground">
+                        <div className="font-semibold text-foreground text-sm leading-5">
                           {formatWorkflowEventTitle(part)}
                         </div>
-                        <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                        <div className="mt-1 text-[11px] text-muted-foreground uppercase tracking-[0.16em]">
                           Workflow
                         </div>
                       </div>
@@ -1680,7 +1680,7 @@ function AssistantMessageParts({
                       <div className="flex shrink-0 items-center gap-2 pl-2">
                         <span
                           className={cn(
-                            'rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em]',
+                            'rounded-full border px-2 py-0.5 font-medium text-[10px] uppercase tracking-[0.16em]',
                             tone.badge,
                           )}
                         >
@@ -1715,9 +1715,9 @@ function AssistantMessageParts({
                           transition={detailsTransition}
                           className="overflow-hidden"
                         >
-                          <div className="border-t border-border/60 px-4 pb-4 pt-3">
+                          <div className="border-border/60 border-t px-4 pt-3 pb-4">
                             {part.data.type === 'system-event' ? (
-                              <div className="text-sm leading-6 text-foreground/80 whitespace-pre-wrap break-words">
+                              <div className="whitespace-pre-wrap break-words text-foreground/80 text-sm leading-6">
                                 {part.data.message}
                               </div>
                             ) : null}
@@ -1860,7 +1860,7 @@ const PurePreviewMessage = ({
       >
         <div
           className={cn(
-            'flex min-w-0 w-full max-w-full gap-4 group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-full sm:group-data-[role=user]/message:max-w-2xl',
+            'flex w-full min-w-0 max-w-full gap-4 group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-full sm:group-data-[role=user]/message:max-w-2xl',
             {
               'w-full': mode === 'edit',
               'group-data-[role=user]/message:w-full sm:group-data-[role=user]/message:w-fit':
@@ -1869,23 +1869,23 @@ const PurePreviewMessage = ({
           )}
         >
           {message.role === 'assistant' && (
-            <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border bg-background">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
               <div className="translate-y-px">
                 <Logo />
               </div>
             </div>
           )}
 
-          <div className="flex min-w-0 flex-col gap-2 w-full">
+          <div className="flex w-full min-w-0 flex-col gap-2">
             {message.role === 'user' &&
               hasRenderableContent &&
               mode === 'view' && (
-                <div className="flex flex-row gap-2 items-start">
+                <div className="flex flex-row items-start gap-2">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="px-2 h-fit rounded-full text-muted-foreground opacity-0 group-hover/message:opacity-100"
+                        className="h-fit rounded-full px-2 text-muted-foreground opacity-0 group-hover/message:opacity-100"
                         onClick={() => {
                           setMode('edit');
                         }}
@@ -1910,7 +1910,7 @@ const PurePreviewMessage = ({
             {message.role === 'user' &&
               hasRenderableContent &&
               mode === 'edit' && (
-                <div className="flex flex-row gap-2 items-start">
+                <div className="flex flex-row items-start gap-2">
                   <div className="size-8" />
 
                   <MessageEditor
@@ -1972,17 +1972,17 @@ export const ThinkingMessage = () => {
     >
       <div
         className={cx(
-          'flex min-w-0 gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl',
+          'flex w-full min-w-0 gap-4 rounded-xl group-data-[role=user]/message:ml-auto group-data-[role=user]/message:w-fit group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:px-3 group-data-[role=user]/message:py-2',
           {
             'group-data-[role=user]/message:bg-muted': true,
           },
         )}
       >
-        <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-full ring-1 ring-border">
           <Logo />
         </div>
 
-        <div className="flex min-w-0 flex-col gap-2 w-full">
+        <div className="flex w-full min-w-0 flex-col gap-2">
           <div className="flex flex-col gap-4 text-muted-foreground">
             Thinking...
           </div>

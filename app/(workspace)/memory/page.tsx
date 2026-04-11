@@ -55,12 +55,12 @@ export default function MemoryPage() {
   const [activeScope, setActiveScope] = useState<Scope>('builtin');
 
   return (
-    <div className="flex flex-col min-w-0 h-dvh bg-background">
-      <header className="flex sticky top-0 bg-background py-3 items-center px-4 border-b">
-        <h1 className="text-lg font-semibold">Memory</h1>
+    <div className="flex h-dvh min-w-0 flex-col bg-background">
+      <header className="sticky top-0 flex items-center border-b bg-background px-4 py-3">
+        <h1 className="font-semibold text-lg">Memory</h1>
       </header>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 space-y-4 overflow-y-auto p-4">
         {/* Scope tabs */}
         <div className="flex flex-wrap items-center gap-2">
           {(['builtin', 'long_term', 'session'] as Scope[]).map((scope) => (
@@ -149,7 +149,7 @@ function BuiltinPanel() {
     <div className="space-y-4">
       <Card>
         <CardHeader className="space-y-3">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             These built-in memories are used to build system prompts, making
             your Agent customizable to you.
           </p>
@@ -158,7 +158,7 @@ function BuiltinPanel() {
       {BUILTIN_KEYS.map((key) => (
         <Card key={key}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-mono">{key}</CardTitle>
+            <CardTitle className="font-mono text-sm">{key}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <Textarea
@@ -170,7 +170,7 @@ function BuiltinPanel() {
               placeholder={`${key} content...`}
             />
             <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 {memories[key]?.updatedAt
                   ? `Updated: ${new Date(memories[key].updatedAt).toLocaleString()}`
                   : 'Not set'}
@@ -181,9 +181,9 @@ function BuiltinPanel() {
                 onClick={() => saveKey(key)}
               >
                 {savingKey === key ? (
-                  <Loader2 className="size-4 animate-spin mr-1" />
+                  <Loader2 className="mr-1 size-4 animate-spin" />
                 ) : (
-                  <Save className="size-4 mr-1" />
+                  <Save className="mr-1 size-4" />
                 )}
                 Save
               </Button>
@@ -264,11 +264,11 @@ function LongTermPanel() {
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Add Long-term Memory</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Claw can remember your preferences and knowledge across this
             single-user project.
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Setting the <span className="font-medium">embedding model</span> in
             the AI configuration can make retrieval more accurate, but memory
             still saves even if embeddings are unavailable.
@@ -284,9 +284,9 @@ function LongTermPanel() {
           <div className="flex justify-end">
             <Button onClick={create} disabled={creating}>
               {creating ? (
-                <Loader2 className="size-4 animate-spin mr-1" />
+                <Loader2 className="mr-1 size-4 animate-spin" />
               ) : (
-                <Plus className="size-4 mr-1" />
+                <Plus className="mr-1 size-4" />
               )}
               Add
             </Button>
@@ -299,17 +299,17 @@ function LongTermPanel() {
           <Loader2 className="size-6 animate-spin text-muted-foreground" />
         </div>
       ) : memories.length === 0 ? (
-        <div className="text-sm text-muted-foreground p-6 border border-dashed rounded-lg text-center">
+        <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground text-sm">
           No long-term memories yet
         </div>
       ) : (
         <div className="space-y-3">
           {memories.map((item) => (
             <Card key={item.id}>
-              <CardContent className="pt-4 space-y-2">
-                <p className="text-sm whitespace-pre-wrap">{item.content}</p>
+              <CardContent className="space-y-2 pt-4">
+                <p className="whitespace-pre-wrap text-sm">{item.content}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-muted-foreground text-xs">
                     {new Date(item.createdAt).toLocaleString()}
                   </span>
                   <Button
@@ -365,7 +365,7 @@ function SessionPanel() {
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Session Summaries</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Session memory is isolated within each session, which is especially
             useful for long sessions.
           </p>
@@ -386,7 +386,7 @@ function SessionPanel() {
       </Card>
 
       {summaries.length === 0 ? (
-        <div className="text-sm text-muted-foreground p-6 border border-dashed rounded-lg text-center">
+        <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground text-sm">
           {sessionId.trim()
             ? 'No summaries for this session'
             : 'Enter a session ID to view summaries'}
@@ -395,19 +395,19 @@ function SessionPanel() {
         <div className="space-y-3">
           {summaries.map((s) => (
             <Card key={s.id}>
-              <CardContent className="pt-4 space-y-2">
+              <CardContent className="space-y-2 pt-4">
                 <div className="flex items-center gap-2">
-                  <code className="px-2 py-0.5 rounded bg-muted text-xs">
+                  <code className="rounded bg-muted px-2 py-0.5 text-xs">
                     v{s.summaryVersion}
                   </code>
                   {s.isCurrent && (
-                    <span className="text-xs font-medium text-green-600">
+                    <span className="font-medium text-green-600 text-xs">
                       current
                     </span>
                   )}
                 </div>
-                <p className="text-sm whitespace-pre-wrap">{s.content}</p>
-                <span className="text-xs text-muted-foreground block">
+                <p className="whitespace-pre-wrap text-sm">{s.content}</p>
+                <span className="block text-muted-foreground text-xs">
                   {new Date(s.createdAt).toLocaleString()}
                 </span>
               </CardContent>

@@ -79,7 +79,7 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
               required
             />
           </div>
-          {error ? <p className="text-sm text-destructive">{error}</p> : null}
+          {error ? <p className="text-destructive text-sm">{error}</p> : null}
           <Button type="submit" disabled={submitting}>
             {submitting ? 'Signing in...' : 'Sign in'}
           </Button>

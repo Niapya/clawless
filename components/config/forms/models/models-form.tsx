@@ -176,7 +176,7 @@ export function ModelsForm() {
               }
             />
           </Field>
-          <div className="text-xs text-muted-foreground md:col-span-2">
+          <div className="text-muted-foreground text-xs md:col-span-2">
             Changing the embedding model changes vector dimensions and only new
             or re-indexed memories will participate in vector retrieval. Older
             memories still fall back to full-text search until they are
@@ -212,7 +212,7 @@ export function ModelsForm() {
                 }
               />
             </Field>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Sets the default context window. Selecting a model only fills this
               when the field is empty.
             </p>
@@ -233,7 +233,7 @@ export function ModelsForm() {
               />
             </Field>
             {typeof predictedModelLimit?.output === 'number' ? (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Keep this at or below the predicted limit of{' '}
                 {predictedModelLimit.output}.
               </p>
