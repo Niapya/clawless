@@ -5,7 +5,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export const experimental_ppr = true;
 
-export default async function Layout({
+export default async function WorkspaceLayout({
   children,
 }: {
   children: React.ReactNode;

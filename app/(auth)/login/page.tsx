@@ -46,7 +46,7 @@ export default async function LoginPage({
               <CardTitle>Authentication setup required</CardTitle>
               <CardDescription>
                 Sign in is disabled until the server is configured with
-                `AUTH_SECRET`, `username`, and `password`.
+                `AUTH_SECRET`, `USERNAME`, and `PASSWORD`.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
