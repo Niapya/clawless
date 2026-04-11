@@ -1,8 +1,8 @@
 'use client';
 
-import { ofetch } from 'ofetch';
 import { useEffect, useMemo, useState } from 'react';
 
+import { loadToolCatalogAction } from '@/app/(workspace)/config/actions';
 import {
   Card,
   CardContent,
@@ -59,20 +59,28 @@ function pickAllowedConfig(
   );
 }
 
-export function ToolsForm() {
+export function ToolsForm({
+  initialCatalog = null,
+}: {
+  initialCatalog?: ToolCatalogResponse | null;
+}) {
   const { issues, value, updateValue } = useConfigSection('tools');
   const tools = (value ?? {}) as ToolConfig;
-  const [catalog, setCatalog] = useState<ToolCatalogResponse | null>(null);
+  const [catalog, setCatalog] = useState<ToolCatalogResponse | null>(
+    initialCatalog,
+  );
   const [catalogLoadError, setCatalogLoadError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (initialCatalog) {
+      return;
+    }
+
     let isActive = true;
 
     const loadCatalog = async () => {
       try {
-        const response = await ofetch<ToolCatalogResponse>(
-          '/api/config/tools/catalog',
-        );
+        const response = await loadToolCatalogAction();
 
         if (!isActive) {
           return;
@@ -94,7 +102,7 @@ export function ToolsForm() {
     return () => {
       isActive = false;
     };
-  }, []);
+  }, [initialCatalog]);
 
   const catalogTools = catalog?.tools ?? [];
   const catalogToolMap = useMemo(

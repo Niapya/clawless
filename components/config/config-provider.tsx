@@ -1,6 +1,5 @@
 'use client';
 
-import { ofetch } from 'ofetch';
 import {
   createContext,
   startTransition,
@@ -12,6 +11,10 @@ import {
 } from 'react';
 import { toast } from 'sonner';
 
+import {
+  loadConfigAction,
+  saveConfigAction,
+} from '@/app/(workspace)/config/actions';
 import {
   type ConfigValidationIssue,
   useConfigValidation,
@@ -45,38 +48,12 @@ interface ConfigContextValue {
 
 const ConfigContext = createContext<ConfigContextValue | null>(null);
 
-type ConfigLoadResponse = {
-  config: AppConfig;
-  runtimeHealth: RuntimeHealthSnapshot | null;
-};
-
 function formatJson(value: unknown) {
   return JSON.stringify(value, null, 2);
 }
 
 function cloneDraft(value: ConfigDraft): ConfigDraft {
   return structuredClone(value);
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
-}
-
-function extractConfigLoadResponse(payload: unknown): ConfigLoadResponse {
-  if (!isRecord(payload) || !('config' in payload)) {
-    const config = appConfigSchema.parse(payload);
-    return {
-      config,
-      runtimeHealth: null,
-    };
-  }
-
-  return {
-    config: appConfigSchema.parse(payload.config),
-    runtimeHealth: isRecord(payload.runtimeHealth)
-      ? (payload.runtimeHealth as RuntimeHealthSnapshot)
-      : null,
-  };
 }
 
 export function ConfigProvider({ children }: { children: React.ReactNode }) {
@@ -99,9 +76,8 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
 
     try {
-      const payload = await ofetch<unknown>('/api/config');
       const { config, runtimeHealth: nextRuntimeHealth } =
-        extractConfigLoadResponse(payload);
+        await loadConfigAction();
 
       startTransition(() => {
         setDraft(config);
@@ -181,11 +157,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
     setIsSaving(true);
 
     try {
-      const savedPayload = await ofetch<unknown>('/api/config/update', {
-        method: 'PUT',
-        body: parsed,
-      });
-      const saved = appConfigSchema.parse(savedPayload);
+      const saved = appConfigSchema.parse(await saveConfigAction(parsed));
 
       startTransition(() => {
         setDraft(saved);

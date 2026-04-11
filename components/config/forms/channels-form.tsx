@@ -1,11 +1,11 @@
 'use client';
 
 import { AlertCircle, Copy } from 'lucide-react';
-import { ofetch } from 'ofetch';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useCopyToClipboard } from 'usehooks-ts';
 
+import { loadWebhookConfigAction } from '@/app/(workspace)/config/actions';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -41,14 +41,18 @@ type WebhookConfigResponse = {
   urls: Record<AdapterName, string | null>;
 };
 
-export function ChannelsForm() {
+export function ChannelsForm({
+  initialWebhookConfig = null,
+}: {
+  initialWebhookConfig?: WebhookConfigResponse | null;
+}) {
   const { issues, value, updateValue } = useConfigSection('channels');
   const channels = (value ?? {}) as Partial<ChannelsConfig>;
   const [webhookConfig, setWebhookConfig] =
-    useState<WebhookConfigResponse | null>(null);
+    useState<WebhookConfigResponse | null>(initialWebhookConfig);
   const [webhookConfigStatus, setWebhookConfigStatus] = useState<
     'loading' | 'ready' | 'error'
-  >('loading');
+  >(initialWebhookConfig ? 'ready' : 'loading');
   const [_, copyToClipboard] = useCopyToClipboard();
 
   const adapters: Array<{
@@ -95,9 +99,13 @@ export function ChannelsForm() {
   ];
 
   useEffect(() => {
+    if (initialWebhookConfig) {
+      return;
+    }
+
     let isMounted = true;
 
-    void ofetch<WebhookConfigResponse>('/api/config/webhooks')
+    void loadWebhookConfigAction()
       .then((payload) => {
         if (isMounted) {
           setWebhookConfig(payload);
@@ -114,7 +122,7 @@ export function ChannelsForm() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialWebhookConfig]);
 
   return (
     <div className="space-y-6">

@@ -40,7 +40,7 @@ export default async function LoginPage({
   if (!authConfig.isConfigured) {
     return (
       <main className="min-h-dvh bg-gradient-to-b from-background to-muted/20 px-6 py-12">
-        <div className="mx-auto flex min-h-[70dvh] max-w-5xl items-center justify-center">
+        <div className="mx-auto flex flex-col min-h-[70dvh] max-w-5xl items-center justify-center">
           <Card className="w-full max-w-2xl border-border/60 shadow-sm">
             <CardHeader>
               <CardTitle>Authentication setup required</CardTitle>
@@ -67,6 +67,19 @@ export default async function LoginPage({
               </div>
             </CardContent>
           </Card>
+          <div className="mt-6 w-full max-w-2xl text-center">
+            <p className="text-sm text-muted-foreground">
+              Powered by{' '}
+              <a
+                href="https://github.com/Niapya/clawless"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium underline"
+              >
+                ClawLess
+              </a>
+            </p>
+          </div>
         </div>
       </main>
     );
@@ -82,8 +95,21 @@ export default async function LoginPage({
 
   return (
     <main className="min-h-dvh bg-gradient-to-b from-background to-muted/20 px-6 py-12">
-      <div className="mx-auto flex min-h-[70dvh] max-w-5xl items-center justify-center">
+      <div className="mx-auto flex flex-col min-h-[70dvh] max-w-5xl items-center justify-center">
         <LoginForm redirectTo={nextPath} />
+        <div className="mt-6 w-full max-w-2xl text-center">
+          <p className="text-sm text-muted-foreground">
+            Powered by{' '}
+            <a
+              href="https://github.com/Niapya/clawless"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline"
+            >
+              ClawLess
+            </a>
+          </p>
+        </div>
       </div>
     </main>
   );

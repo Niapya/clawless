@@ -328,11 +328,37 @@ a {
 }
 
 .prose img {
-  max-width: 70%;
+  max-width: 100%;
   margin: 1.5em auto;
   display: block;
   height: auto;
   border-radius: 12px;
+}
+
+.prose video,
+.prose iframe,
+.prose object,
+.prose embed {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  margin: 1.5em auto;
+}
+
+.prose video {
+  height: auto;
+  border-radius: 12px;
+}
+
+.prose iframe {
+  aspect-ratio: 16 / 9;
+  min-height: 240px;
+  border: 0;
+}
+
+.prose object,
+.prose embed {
+  border: 0;
 }
 
 .prose blockquote {
