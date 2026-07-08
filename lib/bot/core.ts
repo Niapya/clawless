@@ -1,7 +1,7 @@
 import { getConfig } from '@/lib/core/kv/config';
 import type { AppConfig } from '@/types/config';
 import { Chat } from 'chat';
-import { redisState } from '../core/kv';
+import { getRedisState } from '../core/kv';
 import { createBotAdapters } from './adaptor';
 
 type CreateBaseBotOptions = {
@@ -25,7 +25,7 @@ export function createBaseBotFromConfig(
 
   return new Chat({
     adapters,
-    state: redisState,
+    state: getRedisState(),
     userName: resolveBotUserName(options),
   });
 }

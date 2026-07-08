@@ -1,4 +1,4 @@
-import { db, schema } from '@/lib/core/db';
+import { getDb, schema } from '@/lib/core/db';
 import { createLogger } from '@/lib/utils/logger';
 import { eq } from 'drizzle-orm';
 
@@ -23,7 +23,7 @@ export async function createScheduledTask(input: {
     type: input.type,
   });
 
-  const [task] = await db
+  const [task] = await getDb()
     .insert(schema.scheduledTasks)
     .values({
       sessionId: input.sessionId,
@@ -46,7 +46,7 @@ export async function createScheduledTask(input: {
 }
 
 export async function getScheduledTask(taskId: string) {
-  const [task] = await db
+  const [task] = await getDb()
     .select()
     .from(schema.scheduledTasks)
     .where(eq(schema.scheduledTasks.id, taskId))
@@ -56,7 +56,7 @@ export async function getScheduledTask(taskId: string) {
 }
 
 export async function listScheduledTasks() {
-  const tasks = await db.select().from(schema.scheduledTasks);
+  const tasks = await getDb().select().from(schema.scheduledTasks);
 
   return tasks.sort((left, right) => {
     if (left.active !== right.active) {
@@ -74,7 +74,7 @@ export async function listScheduledTasks() {
 }
 
 export async function listScheduledTasksBySessionId(sessionId: string) {
-  return db
+  return getDb()
     .select()
     .from(schema.scheduledTasks)
     .where(eq(schema.scheduledTasks.sessionId, sessionId));
@@ -99,7 +99,7 @@ export async function updateScheduledTask(
 ) {
   logger.log('update:start', { taskId, keys: Object.keys(input) });
 
-  await db
+  await getDb()
     .update(schema.scheduledTasks)
     .set({
       ...input,
@@ -113,7 +113,7 @@ export async function updateScheduledTask(
 export async function deleteScheduledTask(taskId: string) {
   logger.info('delete:start', { taskId });
 
-  const [task] = await db
+  const [task] = await getDb()
     .delete(schema.scheduledTasks)
     .where(eq(schema.scheduledTasks.id, taskId))
     .returning();

@@ -1,4 +1,4 @@
-import { db, schema } from '@/lib/core/db';
+import { getDb, schema } from '@/lib/core/db';
 import { and, asc, desc, eq, gt, lt } from 'drizzle-orm';
 
 type FileRecordMetadata = Record<string, unknown> | null | undefined;
@@ -15,7 +15,7 @@ export async function createFileRecord(input: {
   blobUrl: string;
   metadata?: FileRecordMetadata;
 }) {
-  const [record] = await db
+  const [record] = await getDb()
     .insert(schema.files)
     .values({
       sessionId: input.sessionId,
@@ -90,7 +90,7 @@ export async function listFiles(options: ListFilesOptions = {}): Promise<{
         ? filters[0]
         : and(...filters);
 
-  const baseQuery = db
+  const baseQuery = getDb()
     .select({
       id: schema.files.id,
       sessionId: schema.files.sessionId,

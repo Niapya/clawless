@@ -1,4 +1,4 @@
-import { db, schema } from '@/lib/core/db';
+import { getDb, schema } from '@/lib/core/db';
 import {
   type HybridSearchRow,
   getHybridCandidateLimit,
@@ -53,7 +53,7 @@ function escapeLikePattern(value: string) {
 }
 
 export async function createLongTermMemoryRow(content: string) {
-  const [row] = await db
+  const [row] = await getDb()
     .insert(schema.longTermMemories)
     .values({
       content,
@@ -65,7 +65,7 @@ export async function createLongTermMemoryRow(content: string) {
 }
 
 export async function getLongTermMemoryRow(id: string) {
-  const [row] = await db
+  const [row] = await getDb()
     .select()
     .from(schema.longTermMemories)
     .where(eq(schema.longTermMemories.id, id))
@@ -81,7 +81,7 @@ export async function listLongTermMemoryRows(options?: {
   const safeLimit = Math.max(1, Math.min(options?.limit ?? 100, 200));
   const safeOffset = Math.max(0, options?.offset ?? 0);
 
-  return db
+  return getDb()
     .select()
     .from(schema.longTermMemories)
     .orderBy(desc(schema.longTermMemories.updatedAt))
@@ -90,14 +90,14 @@ export async function listLongTermMemoryRows(options?: {
 }
 
 export async function listAllLongTermMemoryRows() {
-  return db
+  return getDb()
     .select()
     .from(schema.longTermMemories)
     .orderBy(desc(schema.longTermMemories.updatedAt));
 }
 
 export async function updateLongTermMemoryRow(id: string, content: string) {
-  const [row] = await db
+  const [row] = await getDb()
     .update(schema.longTermMemories)
     .set({ content, updatedAt: new Date() })
     .where(eq(schema.longTermMemories.id, id))
@@ -107,7 +107,7 @@ export async function updateLongTermMemoryRow(id: string, content: string) {
 }
 
 export async function deleteLongTermMemoryRow(id: string) {
-  const [row] = await db
+  const [row] = await getDb()
     .delete(schema.longTermMemories)
     .where(eq(schema.longTermMemories.id, id))
     .returning();
@@ -135,6 +135,8 @@ export async function replaceLongTermMemoryChunks(
     ],
   });
 
+  const db = getDb();
+
   await db.batch([
     db
       .delete(schema.longTermMemoryChunks)
@@ -160,7 +162,7 @@ export async function replaceLongTermMemoryChunks(
 }
 
 export async function listLongTermMemoryChunksForMemory(memoryId: string) {
-  return db
+  return getDb()
     .select()
     .from(schema.longTermMemoryChunks)
     .where(eq(schema.longTermMemoryChunks.memoryId, memoryId))
@@ -178,7 +180,7 @@ async function listKeywordCandidateRows(options: {
   if (useSubstringFallback) {
     const substringScoreExpr = sql<number>`case when ${schema.longTermMemoryChunks.content} ilike ${likePattern} escape '\\' then 1 else 0 end`;
 
-    return db
+    return getDb()
       .select({
         chunkId: schema.longTermMemoryChunks.id,
         memoryId: schema.longTermMemoryChunks.memoryId,
@@ -199,7 +201,7 @@ async function listKeywordCandidateRows(options: {
   const tsQueryExpr = sql`websearch_to_tsquery('simple', ${normalizedSearchText})`;
   const keywordScoreExpr = sql<number>`coalesce(ts_rank(${schema.longTermMemoryChunks.tsv}, ${tsQueryExpr}, 32), 0)`;
 
-  const rows = await db
+  const rows = await getDb()
     .select({
       chunkId: schema.longTermMemoryChunks.id,
       memoryId: schema.longTermMemoryChunks.memoryId,
@@ -217,7 +219,7 @@ async function listKeywordCandidateRows(options: {
 
   const substringScoreExpr = sql<number>`case when ${schema.longTermMemoryChunks.content} ilike ${likePattern} escape '\\' then 1 else 0 end`;
 
-  return db
+  return getDb()
     .select({
       chunkId: schema.longTermMemoryChunks.id,
       memoryId: schema.longTermMemoryChunks.memoryId,
@@ -373,7 +375,7 @@ export async function hybridSearchLongTermMemoryChunks(options: {
     activeQueryEmbedding,
   );
   const vectorScoreExpr = sql<number>`greatest(0, 1 - (${distanceExpr}))`;
-  const vectorRows = await db
+  const vectorRows = await getDb()
     .select({
       chunkId: schema.longTermMemoryChunks.id,
       memoryId: schema.longTermMemoryChunks.memoryId,

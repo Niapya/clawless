@@ -1,8 +1,8 @@
-import { db, schema } from '@/lib/core/db';
+import { getDb, schema } from '@/lib/core/db';
 import { and, desc, eq, sql } from 'drizzle-orm';
 
 export async function getCurrentSessionSummaryRow(sessionId: string) {
-  const [row] = await db
+  const [row] = await getDb()
     .select()
     .from(schema.sessionMemories)
     .where(
@@ -17,7 +17,7 @@ export async function getCurrentSessionSummaryRow(sessionId: string) {
 }
 
 export async function listSessionSummaryRows(sessionId: string) {
-  return db
+  return getDb()
     .select()
     .from(schema.sessionMemories)
     .where(eq(schema.sessionMemories.sessionId, sessionId))
@@ -28,7 +28,7 @@ export async function saveSessionSummaryRow(
   sessionId: string,
   summaryText: string,
 ) {
-  await db
+  await getDb()
     .update(schema.sessionMemories)
     .set({ isCurrent: false })
     .where(
@@ -38,7 +38,7 @@ export async function saveSessionSummaryRow(
       ),
     );
 
-  const [latest] = await db
+  const [latest] = await getDb()
     .select({
       maxVersion: sql<number>`coalesce(max(${schema.sessionMemories.summaryVersion}), 0)`,
     })
@@ -47,7 +47,7 @@ export async function saveSessionSummaryRow(
 
   const nextVersion = (latest?.maxVersion ?? 0) + 1;
 
-  const [row] = await db
+  const [row] = await getDb()
     .insert(schema.sessionMemories)
     .values({
       sessionId,
@@ -61,7 +61,7 @@ export async function saveSessionSummaryRow(
 }
 
 export async function clearCurrentSessionSummaryRow(sessionId: string) {
-  await db
+  await getDb()
     .update(schema.sessionMemories)
     .set({ isCurrent: false })
     .where(

@@ -2,7 +2,7 @@ import type {
   PersistedMessageRecord,
   SerializedMessageForDB,
 } from '@/lib/chat/message-utils';
-import { db, schema } from '@/lib/core/db';
+import { getDb, schema } from '@/lib/core/db';
 import { createLogger } from '@/lib/utils/logger';
 import { and, asc, desc, eq, inArray } from 'drizzle-orm';
 
@@ -37,7 +37,7 @@ export async function createSession(input: {
   totalTokens?: number;
   metadata?: SessionMetadata;
 }) {
-  const [session] = await db
+  const [session] = await getDb()
     .insert(schema.sessions)
     .values({
       ...(input.id ? { id: input.id } : {}),
@@ -61,7 +61,7 @@ export async function createSession(input: {
 }
 
 export async function getSession(sessionId: string) {
-  const [session] = await db
+  const [session] = await getDb()
     .select()
     .from(schema.sessions)
     .where(eq(schema.sessions.id, sessionId))
@@ -71,7 +71,7 @@ export async function getSession(sessionId: string) {
 }
 
 export async function getSessionByExternalThreadId(externalThreadId: string) {
-  const [session] = await db
+  const [session] = await getDb()
     .select()
     .from(schema.sessions)
     .where(eq(schema.sessions.externalThreadId, externalThreadId))
@@ -94,14 +94,14 @@ export async function listSessionsByExternalThreadIds(
     return [];
   }
 
-  return db
+  return getDb()
     .select()
     .from(schema.sessions)
     .where(inArray(schema.sessions.externalThreadId, ids));
 }
 
 export async function getSessionByWorkflowRunId(runId: string) {
-  const [session] = await db
+  const [session] = await getDb()
     .select()
     .from(schema.sessions)
     .where(eq(schema.sessions.workflowRunId, runId))
@@ -116,7 +116,7 @@ export async function listSessions(options?: {
   limit?: number;
 }) {
   const safeLimit = Math.max(1, Math.min(options?.limit ?? 50, 200));
-  const rows = await db
+  const rows = await getDb()
     .select()
     .from(schema.sessions)
     .orderBy(desc(schema.sessions.updatedAt))
@@ -137,7 +137,7 @@ export async function updateSession(
   sessionId: string,
   patch: Partial<typeof schema.sessions.$inferInsert>,
 ) {
-  const [session] = await db
+  const [session] = await getDb()
     .update(schema.sessions)
     .set({
       ...patch,
@@ -150,7 +150,7 @@ export async function updateSession(
 }
 
 export async function deleteSession(sessionId: string) {
-  const [session] = await db
+  const [session] = await getDb()
     .delete(schema.sessions)
     .where(eq(schema.sessions.id, sessionId))
     .returning();
@@ -163,7 +163,7 @@ export async function saveMessages(messages: SerializedMessageForDB[]) {
     return [];
   }
 
-  const rows = await db
+  const rows = await getDb()
     .insert(schema.messages)
     .values(
       messages.map((message) => ({
@@ -195,7 +195,7 @@ export async function upsertPersistedMessage(input: SerializedMessageForDB) {
     throw new Error('uiMessageId is required for persisted message upsert.');
   }
 
-  const [existing] = await db
+  const [existing] = await getDb()
     .select()
     .from(schema.messages)
     .where(
@@ -207,7 +207,7 @@ export async function upsertPersistedMessage(input: SerializedMessageForDB) {
     .limit(1);
 
   if (!existing) {
-    const [created] = await db
+    const [created] = await getDb()
       .insert(schema.messages)
       .values({
         sessionId: input.sessionId,
@@ -223,7 +223,7 @@ export async function upsertPersistedMessage(input: SerializedMessageForDB) {
     return created ? toPersistedMessageRecord(created) : null;
   }
 
-  const [updated] = await db
+  const [updated] = await getDb()
     .update(schema.messages)
     .set({
       role: input.role,
@@ -240,7 +240,7 @@ export async function upsertPersistedMessage(input: SerializedMessageForDB) {
 export async function getSessionMessages(
   sessionId: string,
 ): Promise<PersistedMessageRecord[]> {
-  const rows = await db
+  const rows = await getDb()
     .select()
     .from(schema.messages)
     .where(eq(schema.messages.sessionId, sessionId))
@@ -252,7 +252,7 @@ export async function getSessionMessages(
 export async function getVisibleSessionMessages(
   sessionId: string,
 ): Promise<PersistedMessageRecord[]> {
-  const rows = await db
+  const rows = await getDb()
     .select()
     .from(schema.messages)
     .where(
@@ -269,7 +269,7 @@ export async function getVisibleSessionMessages(
 export async function getFirstVisibleSessionMessage(
   sessionId: string,
 ): Promise<PersistedMessageRecord | null> {
-  const [row] = await db
+  const [row] = await getDb()
     .select()
     .from(schema.messages)
     .where(
@@ -331,7 +331,7 @@ export async function deleteMessagesAfterUiMessageId(
 
   const deleted: PersistedMessageRecord[] = [];
   for (const id of ids) {
-    const [row] = await db
+    const [row] = await getDb()
       .delete(schema.messages)
       .where(eq(schema.messages.id, id))
       .returning();
