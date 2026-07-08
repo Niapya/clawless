@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ofetch } from 'ofetch';
 import { useState } from 'react';
@@ -9,6 +10,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -21,6 +23,7 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPasswordHelp, setShowPasswordHelp] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,7 +77,16 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor="password">Password</Label>
+              <button
+                type="button"
+                className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                onClick={() => setShowPasswordHelp((visible) => !visible)}
+              >
+                Forgot password?
+              </button>
+            </div>
             <Input
               id="password"
               type="password"
@@ -83,6 +95,11 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
               onChange={(event) => setPassword(event.target.value)}
               required
             />
+            {showPasswordHelp ? (
+              <p className="text-xs text-muted-foreground">
+                Check the environment variables for the configured credentials.
+              </p>
+            ) : null}
           </div>
           {error ? <p className="text-sm text-destructive">{error}</p> : null}
           <Button type="submit" disabled={submitting}>
@@ -90,6 +107,17 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           </Button>
         </form>
       </CardContent>
+      <CardFooter className="justify-center border-t px-6 py-4">
+        <p className="text-xs text-muted-foreground">
+          Powered by{' '}
+          <Link
+            href="https://github.com/Niapya/ClawLess"
+            className="font-medium text-foreground underline-offset-4 hover:underline"
+          >
+            ClawLess
+          </Link>
+        </p>
+      </CardFooter>
     </Card>
   );
 }
